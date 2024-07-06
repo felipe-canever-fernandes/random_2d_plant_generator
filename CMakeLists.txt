@@ -4,3 +4,20 @@ project(random_2d_plant_generator)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(random_2d_plant_generator main.cpp)
+
+include(FetchContent)
+
+set(BUILD_SHARED_LIBS OFF)
+
+FetchContent_Declare(
+        SFML
+        GIT_REPOSITORY
+        https://github.com/SFML/SFML.git GIT_TAG 2.6.1
+)
+
+FetchContent_MakeAvailable(SFML)
+
+target_link_libraries(
+        ${CMAKE_PROJECT_NAME}
+        sfml-graphics
+)
