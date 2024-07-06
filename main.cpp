@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+import random_2d_plant_generator;
+
 auto main() -> int
 {
    auto window = sf::RenderWindow
@@ -8,12 +10,7 @@ auto main() -> int
       "Random 2D Plant Generator"
    );
 
-   auto const rectangle = []
-   {
-      auto rectangle =  sf::RectangleShape({100, 300});
-      rectangle.setFillColor(sf::Color::Green);
-      return rectangle;
-   }();
+   auto const plant = random_2d_plant_generator::Plant();
 
    while (window.isOpen())
    {
@@ -22,7 +19,7 @@ auto main() -> int
             window.close();
 
       window.clear();
-      window.draw(rectangle);
+      plant.draw(window);
       window.display();
    }
 }

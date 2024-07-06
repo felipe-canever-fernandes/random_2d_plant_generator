@@ -3,7 +3,18 @@ project(random_2d_plant_generator)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(random_2d_plant_generator main.cpp)
+add_executable(
+        # TODO: Use variable.
+        random_2d_plant_generator
+        main.cpp
+        random_2d_plant_generator/plant.cpp
+)
+
+target_sources(
+        ${CMAKE_PROJECT_NAME}
+        PUBLIC FILE_SET CXX_MODULES TYPE CXX_MODULES FILES
+        random_2d_plant_generator/plant.cppm
+)
 
 include(FetchContent)
 
