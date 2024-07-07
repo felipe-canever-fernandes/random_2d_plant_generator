@@ -18,5 +18,6 @@ namespace random_2d_plant_generator
 
     private:
         Branch branch;
+        auto do_on_branch_grew_up(Branch const& branch) -> void;
     };
 }

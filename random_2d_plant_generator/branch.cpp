@@ -8,8 +8,8 @@ import :branch;
 
 namespace random_2d_plant_generator
 {
-    Branch::Branch(sf::Vector2f const position):
-    shape(create_shape(position))
+    Branch::Branch(sf::Vector2f const position, OnGrewUp const do_on_grew_up):
+    shape(create_shape(position)), do_on_grew_up(do_on_grew_up)
     {}
 
     auto Branch::update(float const delta_time) -> void
@@ -54,6 +54,9 @@ namespace random_2d_plant_generator
         shape.setOrigin({new_size.x / 2, new_size.y});
 
         has_grown_up = has_x_grown_up && has_y_grown_up;
+
+        if (has_grown_up)
+            do_on_grew_up(*this);
     }
 
     auto Branch::draw(sf::RenderWindow& window) const -> void
