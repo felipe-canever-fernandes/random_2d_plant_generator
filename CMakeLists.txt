@@ -8,12 +8,15 @@ add_executable(
         random_2d_plant_generator
         main.cpp
         random_2d_plant_generator/plant.cpp
+        random_2d_plant_generator/branch.cpp
 )
 
 target_sources(
         ${CMAKE_PROJECT_NAME}
         PUBLIC FILE_SET CXX_MODULES TYPE CXX_MODULES FILES
+        random_2d_plant_generator/random_2d_plant_generator.cppm
         random_2d_plant_generator/plant.cppm
+        random_2d_plant_generator/branch.cppm
 )
 
 include(FetchContent)

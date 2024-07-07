@@ -2,7 +2,9 @@ module;
 
 #include <SFML/Graphics.hpp>
 
-export module random_2d_plant_generator;
+export module random_2d_plant_generator:plant;
+
+import :branch;
 
 namespace random_2d_plant_generator
 {
@@ -15,9 +17,6 @@ namespace random_2d_plant_generator
         auto draw(sf::RenderWindow& window) const -> void;
 
     private:
-        sf::RectangleShape shape;
-
-        [[nodiscard]]
-        static auto create_shape(sf::Vector2f position) -> sf::RectangleShape;
+        Branch branch;
     };
 }
