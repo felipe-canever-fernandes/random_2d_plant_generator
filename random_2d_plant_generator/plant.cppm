@@ -8,16 +8,16 @@ import :branch;
 
 namespace random_2d_plant_generator
 {
-    export class Plant
-    {
-    public:
-        explicit Plant(sf::Vector2f position);
+	export class Plant
+	{
+	public:
+		explicit Plant(sf::Vector2f position);
 
-        auto update(float delta_time) -> void;
-        auto draw(sf::RenderWindow& window) const -> void;
+		auto update(float delta_time) -> void;
+		auto draw(sf::RenderWindow& window) const -> void;
 
-    private:
-        Branch branch;
-        auto do_on_branch_grew_up(Branch const& branch) -> void;
-    };
+	private:
+		Branch branch;
+		auto do_on_branch_grew_up(Branch const& branch) -> void;
+	};
 }
