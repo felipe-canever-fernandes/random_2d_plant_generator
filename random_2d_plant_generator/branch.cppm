@@ -25,14 +25,13 @@ namespace random_2d_plant_generator
 		[[nodiscard]] auto get_tip_position() const -> sf::Vector2f;
 
 	private:
+		[[nodiscard]]
+		static auto create_shape(sf::Vector2f position) -> sf::RectangleShape;
+
 		sf::RectangleShape shape;
 		bool has_grown_up;
 		OnGrewUp do_on_grew_up;
 		Branch const* p_parent;
-
-		// TODO: Move above member variables.
-		[[nodiscard]]
-		static auto create_shape(sf::Vector2f position) -> sf::RectangleShape;
 
 		auto grow(float delta_time) -> void;
 	};
