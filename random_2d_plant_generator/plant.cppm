@@ -1,5 +1,6 @@
 module;
 
+#include <list>
 #include <SFML/Graphics.hpp>
 
 export module random_2d_plant_generator:plant;
@@ -17,7 +18,7 @@ namespace random_2d_plant_generator
 		auto draw(sf::RenderWindow& window) const -> void;
 
 	private:
-		Branch branch;
+		std::list<Branch> branches;
 		auto do_on_branch_grew_up(Branch const& branch) -> void;
 	};
 }
