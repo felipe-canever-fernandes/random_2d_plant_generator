@@ -10,20 +10,16 @@ module random_2d_plant_generator;
 namespace random_2d_plant_generator
 {
 	Plant::Plant(sf::Vector2f const position):
-		branches
-		({
-			Branch
+		on_branch_grew_up(
+			std::bind
 			(
-				position,
-
-				std::bind
-				(
-					&Plant::do_on_branch_grew_up,
-					this,
-					std::placeholders::_1
-				)
+				&Plant::do_on_branch_grew_up,
+				this,
+				std::placeholders::_1
 			)
-		})
+		),
+
+		branches({Branch(on_branch_grew_up, nullptr, position)})
 	{}
 
 	auto Plant::update(float const delta_time) -> void
@@ -40,6 +36,6 @@ namespace random_2d_plant_generator
 
 	auto Plant::do_on_branch_grew_up(Branch const& branch) -> void
 	{
-		std::println("Branch grew up.");
+		branches.emplace_back(on_branch_grew_up, &branch);
 	}
 }
