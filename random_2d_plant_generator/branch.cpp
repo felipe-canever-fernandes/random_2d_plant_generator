@@ -64,6 +64,13 @@ namespace random_2d_plant_generator
 		window.draw(shape);
 	}
 
+	auto Branch::get_tip_position() const -> sf::Vector2f
+	{
+		auto const size = shape.getSize();
+		auto const offset = sf::Vector2f(0, -size.y);
+		return shape.getPosition() + offset;
+	}
+
 	auto Branch::create_shape(sf::Vector2f const position) -> sf::RectangleShape
 	{
 		auto rectangle = sf::RectangleShape();

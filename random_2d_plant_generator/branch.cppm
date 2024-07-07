@@ -17,6 +17,8 @@ namespace random_2d_plant_generator
 		auto update(float delta_time) -> void;
 		auto draw(sf::RenderWindow& window) const -> void;
 
+		[[nodiscard]] auto get_tip_position() const -> sf::Vector2f;
+
 	private:
 		sf::RectangleShape shape;
 		OnGrewUp do_on_grew_up;
