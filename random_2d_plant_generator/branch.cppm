@@ -14,6 +14,8 @@ namespace random_2d_plant_generator
 
 		explicit Branch
 		(
+			sf::Vector2f maximum_size,
+			float rotation,
 			OnGrewUp do_on_grew_up,
 			Branch const* p_parent,
 			sf::Vector2f position = sf::Vector2f(0, 0)
@@ -24,12 +26,18 @@ namespace random_2d_plant_generator
 
 		[[nodiscard]] auto get_tip_position() const -> sf::Vector2f;
 		[[nodiscard]] auto get_size() const -> sf::Vector2f;
+		[[nodiscard]] auto get_rotation() const -> float;
 
 	private:
 		[[nodiscard]]
-		static auto create_shape(sf::Vector2f position) -> sf::RectangleShape;
+		static auto create_shape
+		(
+			sf::Vector2f position,
+			float rotation
+		) -> sf::RectangleShape;
 
 		sf::RectangleShape shape;
+		sf::Vector2f maximum_size;
 		bool has_grown_up;
 		OnGrewUp do_on_grew_up;
 		Branch const* p_parent;

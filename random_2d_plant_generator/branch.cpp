@@ -1,5 +1,8 @@
 module;
 
+#include <cmath>
+#include <numbers>
+
 #include <SFML/Graphics.hpp>
 
 module random_2d_plant_generator;
@@ -10,11 +13,14 @@ namespace random_2d_plant_generator
 {
 	Branch::Branch
 	(
+		sf::Vector2f const maximum_size,
+		float const rotation,
 		OnGrewUp const do_on_grew_up,
 		Branch const* const p_parent,
 		sf::Vector2f const position
 	):
-		shape(create_shape(position)),
+		shape(create_shape(position, rotation)),
+		maximum_size(maximum_size),
 		has_grown_up(false),
 		do_on_grew_up(do_on_grew_up),
 		p_parent(p_parent)
@@ -35,8 +41,17 @@ namespace random_2d_plant_generator
 
 	auto Branch::get_tip_position() const -> sf::Vector2f
 	{
-		auto const size = shape.getSize();
-		auto const offset = sf::Vector2f(0, -size.y);
+		static constexpr auto pi = std::numbers::pi_v<float>;
+
+		auto const height = get_size().y;
+		auto const rotation_in_radians = get_rotation() * pi / 180.0f;
+
+		auto const offset = sf::Vector2f
+		(
+			height * std::sin(rotation_in_radians),
+			-height * std::cos(rotation_in_radians)
+		);
+
 		return shape.getPosition() + offset;
 	}
 
@@ -45,19 +60,28 @@ namespace random_2d_plant_generator
 		return shape.getSize();
 	}
 
-	auto Branch::create_shape(sf::Vector2f const position) -> sf::RectangleShape
+	auto Branch::get_rotation() const -> float
+	{
+		return shape.getRotation();
+	}
+
+	auto Branch::create_shape
+	(
+		sf::Vector2f const position,
+		float const rotation
+	) -> sf::RectangleShape
 	{
 		auto rectangle = sf::RectangleShape();
 
 		rectangle.setFillColor(sf::Color::Green);
 		rectangle.setPosition(position);
+		rectangle.setRotation(rotation);
 
 		return rectangle;
 	}
 
 	auto Branch::grow(float delta_time) -> void
 	{
-		static auto const maximum_size = sf::Vector2f({100, 300});
 		static constexpr auto growth_speed = 10.0f;
 
 		if (has_grown_up)

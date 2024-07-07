@@ -19,7 +19,10 @@ namespace random_2d_plant_generator
 			)
 		),
 
-		branches({Branch(on_branch_grew_up, nullptr, position)})
+		branches
+		({
+			Branch({25, 100}, 0, on_branch_grew_up, nullptr, position)
+		})
 	{}
 
 	auto Plant::update(float const delta_time) -> void
@@ -36,6 +39,25 @@ namespace random_2d_plant_generator
 
 	auto Plant::do_on_branch_grew_up(Branch const& branch) -> void
 	{
-		branches.emplace_back(on_branch_grew_up, &branch);
+		static constexpr auto size_ratio = 0.8f;
+		static constexpr auto minimum_component_size = 1.0f;
+
+		auto const new_size = branch.get_size() * size_ratio;
+
+		if (new_size.x < minimum_component_size)
+			return;
+
+		if (new_size.y < minimum_component_size)
+			return;
+
+		static constexpr auto rotation_offset = 15.0f;
+
+		branches.emplace_back
+		(
+			new_size,
+			branch.get_rotation() + rotation_offset,
+			on_branch_grew_up,
+			&branch
+		);
 	}
 }
