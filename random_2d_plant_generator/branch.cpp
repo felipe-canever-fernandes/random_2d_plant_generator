@@ -53,7 +53,7 @@ namespace random_2d_plant_generator
 	auto Branch::grow(float delta_time) -> void
 	{
 		static auto const maximum_size = sf::Vector2f({100, 300});
-		static constexpr auto growth_speed = 3.0f;
+		static constexpr auto growth_speed = 10.0f;
 
 		if (has_grown_up)
 			return;
