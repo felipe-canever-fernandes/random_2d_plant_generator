@@ -9,11 +9,13 @@ namespace random_2d_plant_generator
     export class Plant
     {
     public:
-        explicit Plant();
+        explicit Plant(sf::Vector2f position);
         auto draw(sf::RenderWindow& window) const -> void;
 
     private:
         sf::RectangleShape shape;
-        [[nodiscard]] static auto create_shape() -> sf::RectangleShape;
+
+        [[nodiscard]]
+        static auto create_shape(sf::Vector2f position) -> sf::RectangleShape;
     };
 }

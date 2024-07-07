@@ -7,18 +7,26 @@ auto main() -> int
    auto const desktop_mode = sf::VideoMode::getDesktopMode();
    constexpr auto window_size_ratio = 0.8;
 
-   auto window = sf::RenderWindow
+   auto const window_size = sf::Vector2u
    (
-      sf::VideoMode
-      (
          static_cast<unsigned int>(desktop_mode.width * window_size_ratio),
          static_cast<unsigned int>(desktop_mode.height * window_size_ratio)
-      ),
+   );
 
+   auto window = sf::RenderWindow
+   (
+      sf::VideoMode(window_size.x, window_size.y),
       "Random 2D Plant Generator"
    );
 
-   auto const plant = random_2d_plant_generator::Plant();
+   auto const plant = random_2d_plant_generator::Plant
+   (
+      sf::Vector2f
+      (
+         static_cast<float>(window_size.x) / 2,
+         static_cast<float>(window_size.y)
+      )
+   );
 
    while (window.isOpen())
    {
