@@ -10,6 +10,8 @@ namespace random_2d_plant_generator
     {
     public:
         explicit Plant(sf::Vector2f position);
+
+        auto update(float delta_time) -> void;
         auto draw(sf::RenderWindow& window) const -> void;
 
     private:
