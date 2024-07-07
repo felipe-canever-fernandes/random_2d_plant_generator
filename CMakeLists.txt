@@ -4,8 +4,7 @@ project(random_2d_plant_generator)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(
-	# TODO: Use variable.
-	random_2d_plant_generator
+	${CMAKE_PROJECT_NAME}
 	main.cpp
 	random_2d_plant_generator/plant.cpp
 	random_2d_plant_generator/branch.cpp
