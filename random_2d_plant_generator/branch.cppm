@@ -23,6 +23,7 @@ namespace random_2d_plant_generator
 		auto draw(sf::RenderWindow& window) const -> void;
 
 		[[nodiscard]] auto get_tip_position() const -> sf::Vector2f;
+		[[nodiscard]] auto get_size() const -> sf::Vector2f;
 
 	private:
 		[[nodiscard]]

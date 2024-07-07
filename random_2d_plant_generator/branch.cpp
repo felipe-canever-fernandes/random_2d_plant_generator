@@ -40,6 +40,11 @@ namespace random_2d_plant_generator
 		return shape.getPosition() + offset;
 	}
 
+	auto Branch::get_size() const -> sf::Vector2f
+	{
+		return shape.getSize();
+	}
+
 	auto Branch::create_shape(sf::Vector2f const position) -> sf::RectangleShape
 	{
 		auto rectangle = sf::RectangleShape();
