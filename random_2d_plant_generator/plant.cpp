@@ -48,14 +48,17 @@ namespace random_2d_plant_generator
 		if (new_size.y < minimum_component_size)
 			return;
 
-		static constexpr auto rotation_offset = 15.0f;
+		static constexpr auto rotation_spread = 30.0f;
 
-		branches.emplace_back
-		(
-			new_size,
-			branch.get_rotation() + rotation_offset,
-			on_branch_grew_up,
-			&branch
-		);
+		for (auto const rotation_offset : {-rotation_spread, rotation_spread})
+		{
+			branches.emplace_back
+			(
+				new_size,
+				branch.get_rotation() + rotation_offset,
+				on_branch_grew_up,
+				&branch
+			);
+		}
 	}
 }
