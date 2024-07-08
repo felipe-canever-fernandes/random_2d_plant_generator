@@ -1,8 +1,6 @@
 module;
 
 #include <functional>
-#include <print>
-
 #include <SFML/Graphics.hpp>
 
 module random_2d_plant_generator;
