@@ -19,7 +19,7 @@ namespace random_2d_plant_generator
 
 		branches
 		({
-			Branch({25, 100}, 0, on_branch_grew_up, nullptr, position)
+			Branch({10, 100}, 0, on_branch_grew_up, nullptr, position)
 		})
 	{}
 
