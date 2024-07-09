@@ -8,10 +8,10 @@ module random_2d_plant_generator;
 namespace random_2d_plant_generator
 {
 	Plant::Plant(sf::Vector2f const position):
-		on_branch_grew_up(
+		on_branch_can_branch(
 			std::bind
 			(
-				&Plant::do_on_branch_grew_up,
+				&Plant::do_on_branch_can_branch,
 				this,
 				std::placeholders::_1
 			)
@@ -19,7 +19,7 @@ namespace random_2d_plant_generator
 
 		branches
 		({
-			Branch({10, 100}, 0, on_branch_grew_up, nullptr, position)
+			Branch({10, 100}, 0, 0.5f, on_branch_can_branch, nullptr, position)
 		})
 	{}
 
@@ -35,17 +35,17 @@ namespace random_2d_plant_generator
 			branch.draw(window);
 	}
 
-	auto Plant::do_on_branch_grew_up(Branch const& branch) -> void
+	auto Plant::do_on_branch_can_branch(Branch const& branch) -> void
 	{
 		static constexpr auto size_ratio = 0.8f;
 		static constexpr auto minimum_component_size = 1.0f;
 
-		auto const new_size = branch.get_size() * size_ratio;
+		auto const new_maximum_size = branch.get_maximum_size() * size_ratio;
 
-		if (new_size.x < minimum_component_size)
+		if (new_maximum_size.x < minimum_component_size)
 			return;
 
-		if (new_size.y < minimum_component_size)
+		if (new_maximum_size.y < minimum_component_size)
 			return;
 
 		static constexpr auto rotation_spread = 30.0f;
@@ -54,9 +54,10 @@ namespace random_2d_plant_generator
 		{
 			branches.emplace_back
 			(
-				new_size,
+				new_maximum_size,
 				branch.get_rotation() + rotation_offset,
-				on_branch_grew_up,
+				0.25f,
+				on_branch_can_branch,
 				&branch
 			);
 		}

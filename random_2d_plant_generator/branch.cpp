@@ -15,14 +15,17 @@ namespace random_2d_plant_generator
 	(
 		sf::Vector2f const maximum_size,
 		float const rotation,
-		OnGrewUp const do_on_grew_up,
+		float const branching_relative_height,
+		OnCanBranch const do_on_can_branch,
 		Branch const* const p_parent,
 		sf::Vector2f const position
 	):
 		shape(create_shape(position, rotation)),
 		maximum_size(maximum_size),
+		branching_relative_height(branching_relative_height),
+		has_reached_branching_height(false),
 		has_grown_up(false),
-		do_on_grew_up(do_on_grew_up),
+		do_on_can_branch(do_on_can_branch),
 		p_parent(p_parent)
 	{}
 
@@ -37,6 +40,11 @@ namespace random_2d_plant_generator
 	auto Branch::draw(sf::RenderWindow& window) const -> void
 	{
 		window.draw(shape);
+	}
+
+	auto Branch::get_maximum_size() const -> sf::Vector2f
+	{
+		return maximum_size;
 	}
 
 	auto Branch::get_tip_position() const -> sf::Vector2f
@@ -82,7 +90,7 @@ namespace random_2d_plant_generator
 
 	auto Branch::grow(float delta_time) -> void
 	{
-		static constexpr auto growth_speed = 10.0f;
+		static constexpr auto growth_speed = 3.0f;
 
 		if (has_grown_up)
 			return;
@@ -120,7 +128,16 @@ namespace random_2d_plant_generator
 
 		has_grown_up = has_x_grown_up && has_y_grown_up;
 
-		if (has_grown_up)
-			do_on_grew_up(*this);
+		if (has_reached_branching_height)
+			return;
+
+		auto const branching_height =
+			maximum_size.y * branching_relative_height;
+
+		if (new_size.y >= branching_height)
+		{
+			has_reached_branching_height = true;
+			do_on_can_branch(*this);
+		}
 	}
 }

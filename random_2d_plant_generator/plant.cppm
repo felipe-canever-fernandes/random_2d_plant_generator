@@ -18,9 +18,9 @@ namespace random_2d_plant_generator
 		auto draw(sf::RenderWindow& window) const -> void;
 
 	private:
-		Branch::OnGrewUp on_branch_grew_up;
+		Branch::OnCanBranch on_branch_can_branch;
 		std::list<Branch> branches;
 
-		auto do_on_branch_grew_up(Branch const& branch) -> void;
+		auto do_on_branch_can_branch(Branch const& branch) -> void;
 	};
 }
