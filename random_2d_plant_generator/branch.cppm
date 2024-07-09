@@ -33,6 +33,11 @@ namespace random_2d_plant_generator
 
 	private:
 		[[nodiscard]]
+		static auto validate_size(sf::Vector2f size) -> sf::Vector2f;
+
+		[[nodiscard]] static auto validate_relative_value(float value) -> float;
+
+		[[nodiscard]]
 		static auto create_shape
 		(
 			sf::Vector2f position,

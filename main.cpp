@@ -2,7 +2,6 @@
 
 import random_2d_plant_generator;
 
-// TODO: Check inputs.
 auto main() -> int
 {
 	auto const desktop_mode = sf::VideoMode::getDesktopMode();

@@ -1,5 +1,6 @@
 module;
 
+#include <cassert>
 #include <cmath>
 #include <numbers>
 
@@ -21,8 +22,13 @@ namespace random_2d_plant_generator
 		sf::Vector2f const position
 	):
 		shape(create_shape(position, rotation)),
-		maximum_size(maximum_size),
-		branching_relative_height(branching_relative_height),
+		maximum_size(validate_size(maximum_size)),
+
+		branching_relative_height
+		(
+			validate_relative_value(branching_relative_height)
+		),
+
 		has_reached_branching_height(false),
 		has_grown_up(false),
 		do_on_can_branch(do_on_can_branch),
@@ -31,6 +37,8 @@ namespace random_2d_plant_generator
 
 	auto Branch::update(float const delta_time) -> void
 	{
+		assert(delta_time >= 0);
+
 		grow(delta_time);
 
 		if (p_parent != nullptr)
@@ -73,6 +81,22 @@ namespace random_2d_plant_generator
 		return shape.getRotation();
 	}
 
+	auto Branch::validate_size(sf::Vector2f const size) -> sf::Vector2f
+	{
+		assert(size.x > 0);
+		assert(size.y > 0);
+
+		return size;
+	}
+
+	auto Branch::validate_relative_value(float const value) -> float
+	{
+		assert(value >= 0);
+		assert(value <= 1);
+
+		return value;
+	}
+
 	auto Branch::create_shape
 	(
 		sf::Vector2f const position,
@@ -90,6 +114,8 @@ namespace random_2d_plant_generator
 
 	auto Branch::grow(float delta_time) -> void
 	{
+		assert(delta_time >= 0);
+
 		static constexpr auto growth_speed = 3.0f;
 
 		if (has_grown_up)

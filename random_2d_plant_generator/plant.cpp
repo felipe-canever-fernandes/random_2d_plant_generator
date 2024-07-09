@@ -1,6 +1,8 @@
 module;
 
+#include <cassert>
 #include <functional>
+
 #include <SFML/Graphics.hpp>
 
 module random_2d_plant_generator;
@@ -25,6 +27,8 @@ namespace random_2d_plant_generator
 
 	auto Plant::update(float const delta_time) -> void
 	{
+		assert(delta_time >= 0);
+
 		for (auto& branch : branches)
 			branch.update(delta_time);
 	}
