@@ -1,3 +1,6 @@
+#include <memory>
+#include <print>
+
 #include <SFML/Graphics.hpp>
 
 import random_2d_plant_generator;
@@ -19,28 +22,44 @@ auto main() -> int
 		"Random 2D Plant Generator"
 	);
 
-	auto plant = random_2d_plant_generator::Plant
-	(
-		sf::Vector2f
+	auto const create_plant =
+	[window_size]
+	{
+		return std::make_unique<random_2d_plant_generator::Plant>
 		(
-			static_cast<float>(window_size.x) / 2,
-			static_cast<float>(window_size.y)
-		)
-	);
+			sf::Vector2f
+			(
+				static_cast<float>(window_size.x) / 2,
+				static_cast<float>(window_size.y)
+			)
+		);
+	};
 
+	auto p_plant = create_plant();
 	auto const delta_time_clock = sf::Clock();
 
 	while (window.isOpen())
 	{
 		for (auto event = sf::Event(); window.pollEvent(event);)
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
+			{
+			case sf::Event::Closed:
 				window.close();
+				break;
+
+			case sf::Event::MouseButtonReleased:
+				p_plant = create_plant();
+				break;
+
+			default:
+				break;
+			}
 
 		auto const delta_time = delta_time_clock.getElapsedTime().asSeconds();
-		plant.update(delta_time);
+		p_plant->update(delta_time);
 
 		window.clear();
-		plant.draw(window);
+		p_plant->draw(window);
 		window.display();
 	}
 }
