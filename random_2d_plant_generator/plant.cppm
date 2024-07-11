@@ -21,8 +21,13 @@ namespace random_2d_plant_generator
 
 	private:
 		static std::mt19937 random_engine;
+
+		static std::normal_distribution<float>
+			branching_relative_height_distribution;
+
 		static std::normal_distribution<float> size_ratio_distribution;
 
+		float branching_relative_height;
 		sf::Vector2f size_ratio;
 
 		Branch::OnCanBranch on_branch_can_branch;

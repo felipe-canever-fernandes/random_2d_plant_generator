@@ -13,9 +13,24 @@ module random_2d_plant_generator;
 namespace random_2d_plant_generator
 {
 	std::mt19937 Plant::random_engine = std::mt19937(std::random_device()());
-	std::normal_distribution<float> Plant::size_ratio_distribution(0.75f, 0.15f);
+
+	std::normal_distribution<float>
+		Plant::branching_relative_height_distribution(0.5f, 0.25f);
+
+	std::normal_distribution<float>
+		Plant::size_ratio_distribution(0.75f, 0.15f);
 
 	Plant::Plant(sf::Vector2f const position):
+		branching_relative_height
+		(
+			std::clamp
+			(
+				branching_relative_height_distribution(random_engine),
+				0.1f,
+				0.9f
+			)
+		),
+
 		size_ratio
 		(
 			std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f),
@@ -62,21 +77,11 @@ namespace random_2d_plant_generator
 			std::abs(height_distribution(random_engine))
 		);
 
-		static auto branching_relative_height_distribution =
-			std::normal_distribution(0.5f, 0.25f);
-
 		return Branch
 		(
 			size,
 			0,
-
-			std::clamp
-			(
-				branching_relative_height_distribution(random_engine),
-				0.0f,
-				1.0f
-			),
-
+			branching_relative_height,
 			on_branch_can_branch,
 			nullptr,
 			position
@@ -107,7 +112,7 @@ namespace random_2d_plant_generator
 			(
 				new_maximum_size,
 				branch.get_rotation() + rotation_offset,
-				0.25f,
+				branching_relative_height,
 				on_branch_can_branch,
 				&branch
 			);
