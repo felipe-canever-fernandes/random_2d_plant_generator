@@ -116,7 +116,7 @@ namespace random_2d_plant_generator
 	{
 		assert(delta_time >= 0);
 
-		static constexpr auto growth_speed = 3.0f;
+		static constexpr auto growth_speed = 10.0f;
 
 		if (has_grown_up)
 			return;
