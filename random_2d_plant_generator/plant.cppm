@@ -28,7 +28,7 @@ namespace random_2d_plant_generator
 		Branch::OnCanBranch on_branch_can_branch;
 		std::list<Branch> branches;
 
-		[[nodiscard]] auto create_trunk(sf::Vector2f position) -> Branch;
+		[[nodiscard]] auto create_trunk(sf::Vector2f position) const -> Branch;
 		auto do_on_branch_can_branch(Branch const& branch) -> void;
 	};
 }

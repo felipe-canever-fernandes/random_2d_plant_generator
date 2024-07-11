@@ -45,7 +45,7 @@ namespace random_2d_plant_generator
 			branch.draw(window);
 	}
 
-	auto Plant::create_trunk(sf::Vector2f const position) -> Branch
+	auto Plant::create_trunk(sf::Vector2f const position) const -> Branch
 	{
 		static auto width_distribution =
 			std::normal_distribution(50.0f, 50.0f);
