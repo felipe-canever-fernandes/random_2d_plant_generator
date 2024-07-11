@@ -26,9 +26,11 @@ namespace random_2d_plant_generator
 			branching_relative_height_distribution;
 
 		static std::normal_distribution<float> size_ratio_distribution;
+		static std::binomial_distribution<> branching_count_distribution;
 
 		float branching_relative_height;
 		sf::Vector2f size_ratio;
+		int branching_count;
 
 		Branch::OnCanBranch on_branch_can_branch;
 		std::list<Branch> branches;

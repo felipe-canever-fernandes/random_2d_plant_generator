@@ -20,6 +20,8 @@ namespace random_2d_plant_generator
 	std::normal_distribution<float>
 		Plant::size_ratio_distribution(0.75f, 0.15f);
 
+	std::binomial_distribution<> Plant::branching_count_distribution(5, 0.6);
+
 	Plant::Plant(sf::Vector2f const position):
 		branching_relative_height
 		(
@@ -36,6 +38,9 @@ namespace random_2d_plant_generator
 			std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f),
 			std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f)
 		),
+
+		branching_count
+			(std::max(branching_count_distribution(random_engine), 1)),
 
 		on_branch_can_branch(
 			std::bind
@@ -104,14 +109,17 @@ namespace random_2d_plant_generator
 		if (new_maximum_size.y < minimum_component_size)
 			return;
 
-		static constexpr auto rotation_spread = 30.0f;
+		static auto rotation_distribution =
+			std::normal_distribution(0.0f, 45.0f);
 
-		for (auto const rotation_offset : {-rotation_spread, rotation_spread})
+		for (auto i = 0; i < branching_count; ++i)
 		{
+			auto const rotation = rotation_distribution(random_engine);
+
 			branches.emplace_back
 			(
 				new_maximum_size,
-				branch.get_rotation() + rotation_offset,
+				branch.get_rotation() + rotation,
 				branching_relative_height,
 				on_branch_can_branch,
 				&branch

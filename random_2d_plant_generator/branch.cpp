@@ -105,7 +105,7 @@ namespace random_2d_plant_generator
 	{
 		auto rectangle = sf::RectangleShape();
 
-		rectangle.setFillColor(sf::Color(0, 255, 0, 100));
+		rectangle.setFillColor(sf::Color::Green);
 		rectangle.setPosition(position);
 		rectangle.setRotation(rotation);
 
