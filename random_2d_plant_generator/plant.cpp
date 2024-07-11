@@ -1,5 +1,6 @@
 module;
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <functional>
@@ -54,11 +55,21 @@ namespace random_2d_plant_generator
 			std::abs(height_distribution(random_engine))
 		);
 
+		static auto branching_relative_height_distribution =
+			std::normal_distribution(0.5f, 0.25f);
+
 		return Branch
 		(
 			size,
 			0,
-			0.5f,
+
+			std::clamp
+			(
+				branching_relative_height_distribution(random_engine),
+				0.0f,
+				1.0f
+			),
+
 			on_branch_can_branch,
 			nullptr,
 			position
