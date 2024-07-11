@@ -13,8 +13,12 @@ module random_2d_plant_generator;
 namespace random_2d_plant_generator
 {
 	std::mt19937 Plant::random_engine = std::mt19937(std::random_device()());
+	std::normal_distribution<float> Plant::size_ratio_distribution(0.75f, 0.15f);
 
 	Plant::Plant(sf::Vector2f const position):
+		size_ratio
+			(std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f)),
+
 		on_branch_can_branch(
 			std::bind
 			(
@@ -78,7 +82,6 @@ namespace random_2d_plant_generator
 
 	auto Plant::do_on_branch_can_branch(Branch const& branch) -> void
 	{
-		static constexpr auto size_ratio = 0.8f;
 		static constexpr auto minimum_component_size = 1.0f;
 
 		auto const new_maximum_size = branch.get_maximum_size() * size_ratio;
