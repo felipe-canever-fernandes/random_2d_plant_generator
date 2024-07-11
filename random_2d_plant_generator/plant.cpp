@@ -17,7 +17,10 @@ namespace random_2d_plant_generator
 
 	Plant::Plant(sf::Vector2f const position):
 		size_ratio
-			(std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f)),
+		(
+			std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f),
+			std::clamp(size_ratio_distribution(random_engine), 0.0f, 1.0f)
+		),
 
 		on_branch_can_branch(
 			std::bind
@@ -84,7 +87,11 @@ namespace random_2d_plant_generator
 	{
 		static constexpr auto minimum_component_size = 1.0f;
 
-		auto const new_maximum_size = branch.get_maximum_size() * size_ratio;
+		auto const new_maximum_size = sf::Vector2f
+		(
+			branch.get_maximum_size().x * size_ratio.x,
+			branch.get_maximum_size().y * size_ratio.y
+		);
 
 		if (new_maximum_size.x < minimum_component_size)
 			return;
