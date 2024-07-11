@@ -1,6 +1,8 @@
 module;
 
 #include <list>
+#include <random>
+
 #include <SFML/Graphics.hpp>
 
 export module random_2d_plant_generator:plant;
@@ -18,9 +20,12 @@ namespace random_2d_plant_generator
 		auto draw(sf::RenderWindow& window) const -> void;
 
 	private:
+		static std::mt19937 random_engine;
+
 		Branch::OnCanBranch on_branch_can_branch;
 		std::list<Branch> branches;
 
+		[[nodiscard]] auto create_trunk(sf::Vector2f position) -> Branch;
 		auto do_on_branch_can_branch(Branch const& branch) -> void;
 	};
 }

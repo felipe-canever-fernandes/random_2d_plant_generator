@@ -1,7 +1,9 @@
 module;
 
 #include <cassert>
+#include <cmath>
 #include <functional>
+#include <random>
 
 #include <SFML/Graphics.hpp>
 
@@ -9,6 +11,8 @@ module random_2d_plant_generator;
 
 namespace random_2d_plant_generator
 {
+	std::mt19937 Plant::random_engine = std::mt19937(std::random_device()());
+
 	Plant::Plant(sf::Vector2f const position):
 		on_branch_can_branch(
 			std::bind
@@ -19,10 +23,7 @@ namespace random_2d_plant_generator
 			)
 		),
 
-		branches
-		({
-			Branch({10, 100}, 0, 0.5f, on_branch_can_branch, nullptr, position)
-		})
+		branches({create_trunk(position)})
 	{}
 
 	auto Plant::update(float const delta_time) -> void
@@ -37,6 +38,31 @@ namespace random_2d_plant_generator
 	{
 		for (auto const& branch : branches)
 			branch.draw(window);
+	}
+
+	auto Plant::create_trunk(sf::Vector2f const position) -> Branch
+	{
+		static auto width_distribution =
+			std::normal_distribution(50.0f, 50.0f);
+
+		static auto height_distribution =
+			std::normal_distribution(200.0f, 100.0f);
+
+		auto const size = sf::Vector2f
+		(
+			std::abs(width_distribution(random_engine)),
+			std::abs(height_distribution(random_engine))
+		);
+
+		return Branch
+		(
+			size,
+			0,
+			0.5f,
+			on_branch_can_branch,
+			nullptr,
+			position
+		);
 	}
 
 	auto Plant::do_on_branch_can_branch(Branch const& branch) -> void
