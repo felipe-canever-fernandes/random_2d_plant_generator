@@ -119,7 +119,7 @@ namespace random_2d_plant_generator
 		return rectangle;
 	}
 
-	auto Branch::grow(float delta_time) -> void
+	auto Branch::grow(float const delta_time) -> void
 	{
 		assert(delta_time >= 0);
 
