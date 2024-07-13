@@ -9,7 +9,16 @@ auto main() -> int
 
 	auto window = sf::RenderWindow
 	(
-		desktop_mode, "Random 2D Plant Generator", sf::Style::Fullscreen
+		desktop_mode,
+		"Random 2D Plant Generator",
+		sf::Style::Fullscreen,
+
+		[]
+		{
+			auto context_settings = sf::ContextSettings();
+			context_settings.antialiasingLevel = 8;
+			return context_settings;
+		}()
 	);
 
 	auto const create_plant =
