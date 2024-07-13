@@ -1,6 +1,4 @@
 #include <memory>
-#include <print>
-
 #include <SFML/Graphics.hpp>
 
 import random_2d_plant_generator;
