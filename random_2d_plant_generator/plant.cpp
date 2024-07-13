@@ -119,7 +119,7 @@ namespace random_2d_plant_generator
 			original_color.a
 		);
 
-		static constexpr auto minimum_component_size = 1.0f;
+		static constexpr auto minimum_component_size = 2.0f;
 
 		auto const new_maximum_size = sf::Vector2f
 		(
