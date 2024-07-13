@@ -70,6 +70,9 @@ namespace random_2d_plant_generator
 
 	auto Plant::create_trunk(sf::Vector2f const position) const -> Branch
 	{
+		static auto color_component_distribution =
+			std::uniform_int_distribution<unsigned>(0, 255);
+
 		static auto width_distribution =
 			std::normal_distribution(50.0f, 50.0f);
 
@@ -84,7 +87,14 @@ namespace random_2d_plant_generator
 
 		return Branch
 		(
-			sf::Color(0, 50, 0),
+			sf::Color
+			(
+				color_component_distribution(random_engine),
+				color_component_distribution(random_engine),
+				color_component_distribution(random_engine),
+				220
+			),
+
 			size,
 			0,
 			branching_relative_height,
