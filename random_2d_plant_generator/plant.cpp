@@ -23,15 +23,7 @@ namespace random_2d_plant_generator
 	std::binomial_distribution<> Plant::branching_count_distribution(5, 0.6);
 
 	Plant::Plant(sf::Vector2f const position):
-		branching_relative_height
-		(
-			std::clamp
-			(
-				branching_relative_height_distribution(random_engine),
-				0.1f,
-				0.9f
-			)
-		),
+		branching_relative_height(0.25f),
 
 		size_ratio
 		(
