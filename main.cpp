@@ -31,19 +31,12 @@ auto main() -> int
 	while (window.isOpen())
 	{
 		for (auto event = sf::Event(); window.pollEvent(event);)
-			switch (event.type)
-			{
-			case sf::Event::Closed:
+			if (event.type == sf::Event::Closed)
 				window.close();
-				break;
-
-			case sf::Event::MouseButtonReleased:
+			else if (event.key.code == sf::Keyboard::Escape)
+				window.close();
+			else if (event.type == sf::Event::MouseButtonReleased)
 				p_plant = create_plant();
-				break;
-
-			default:
-				break;
-			}
 
 		auto const delta_time = delta_time_clock.getElapsedTime().asSeconds();
 		p_plant->update(delta_time);
