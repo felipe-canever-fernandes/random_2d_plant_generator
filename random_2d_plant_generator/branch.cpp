@@ -14,6 +14,7 @@ namespace random_2d_plant_generator
 {
 	Branch::Branch
 	(
+		sf::Color const color,
 		sf::Vector2f const maximum_size,
 		float const rotation,
 		float const branching_relative_height,
@@ -21,7 +22,7 @@ namespace random_2d_plant_generator
 		Branch const* const p_parent,
 		sf::Vector2f const position
 	):
-		shape(create_shape(position, rotation)),
+		shape(create_shape(color, position, rotation)),
 		maximum_size(validate_size(maximum_size)),
 
 		branching_relative_height
@@ -48,6 +49,11 @@ namespace random_2d_plant_generator
 	auto Branch::draw(sf::RenderWindow& window) const -> void
 	{
 		window.draw(shape);
+	}
+
+	auto Branch::get_color() const -> sf::Color
+	{
+		return shape.getFillColor();
 	}
 
 	auto Branch::get_maximum_size() const -> sf::Vector2f
@@ -99,13 +105,14 @@ namespace random_2d_plant_generator
 
 	auto Branch::create_shape
 	(
+		sf::Color const color,
 		sf::Vector2f const position,
 		float const rotation
 	) -> sf::RectangleShape
 	{
 		auto rectangle = sf::RectangleShape();
 
-		rectangle.setFillColor(sf::Color::Green);
+		rectangle.setFillColor(color);
 		rectangle.setPosition(position);
 		rectangle.setRotation(rotation);
 

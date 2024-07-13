@@ -14,6 +14,7 @@ namespace random_2d_plant_generator
 
 		explicit Branch
 		(
+			sf::Color color,
 			sf::Vector2f maximum_size,
 			float rotation,
 			float branching_relative_height,
@@ -25,8 +26,8 @@ namespace random_2d_plant_generator
 		auto update(float delta_time) -> void;
 		auto draw(sf::RenderWindow& window) const -> void;
 
+		[[nodiscard]] auto get_color() const -> sf::Color;
 		[[nodiscard]] auto get_maximum_size() const -> sf::Vector2f;
-
 		[[nodiscard]] auto get_tip_position() const -> sf::Vector2f;
 		[[nodiscard]] auto get_size() const -> sf::Vector2f;
 		[[nodiscard]] auto get_rotation() const -> float;
@@ -40,6 +41,7 @@ namespace random_2d_plant_generator
 		[[nodiscard]]
 		static auto create_shape
 		(
+			sf::Color color,
 			sf::Vector2f position,
 			float rotation
 		) -> sf::RectangleShape;
