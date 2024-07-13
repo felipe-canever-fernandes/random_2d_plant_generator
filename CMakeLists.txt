@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(
 	${CMAKE_PROJECT_NAME}
 	main.cpp
+	color/color.cpp
 	random_2d_plant_generator/plant.cpp
 	random_2d_plant_generator/branch.cpp
 )
@@ -13,6 +14,7 @@ add_executable(
 target_sources(
 	${CMAKE_PROJECT_NAME}
 	PUBLIC FILE_SET CXX_MODULES TYPE CXX_MODULES FILES
+	color/color.cppm
 	random_2d_plant_generator/random_2d_plant_generator.cppm
 	random_2d_plant_generator/plant.cppm
 	random_2d_plant_generator/branch.cppm

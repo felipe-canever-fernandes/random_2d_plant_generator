@@ -10,6 +10,8 @@ module;
 
 module random_2d_plant_generator;
 
+import color;
+
 namespace random_2d_plant_generator
 {
 	std::mt19937 Plant::random_engine = std::mt19937(std::random_device()());
@@ -43,8 +45,19 @@ namespace random_2d_plant_generator
 			)
 		),
 
-		branches({create_trunk(position)})
+		branches({create_trunk(position)}),
+		trunk(*std::begin(branches))
 	{}
+
+	auto Plant::get_color() const -> sf::Color
+	{
+		return trunk.get_color();
+	}
+
+	auto Plant::get_position() const -> sf::Vector2f
+	{
+		return trunk.get_position();
+	}
 
 	auto Plant::update(float const delta_time) -> void
 	{
@@ -98,26 +111,10 @@ namespace random_2d_plant_generator
 
 	auto Plant::do_on_branch_can_branch(Branch const& branch) -> void
 	{
-		static constexpr auto color_ratio = 1.1f;
-
-		static auto const calculate_new_color_component =
-		[](sf::Uint8 const original_component)
-		{
-			auto const scaled =
-				static_cast<unsigned>(original_component * color_ratio);
-
-			return static_cast<sf::Uint8>(std::clamp(scaled, 0u, 255u));
-		};
-
 		auto const original_color = branch.get_color();
 
-		auto const new_color = sf::Color
-		(
-			calculate_new_color_component(original_color.r),
-			calculate_new_color_component(original_color.g),
-			calculate_new_color_component(original_color.b),
-			original_color.a
-		);
+		auto const new_color =
+			color::calculate_new_shade(original_color, 1.1f, true);
 
 		static constexpr auto minimum_component_size = 2.0f;
 

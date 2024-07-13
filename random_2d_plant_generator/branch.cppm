@@ -28,6 +28,7 @@ namespace random_2d_plant_generator
 
 		[[nodiscard]] auto get_color() const -> sf::Color;
 		[[nodiscard]] auto get_maximum_size() const -> sf::Vector2f;
+		[[nodiscard]] auto get_position() const -> sf::Vector2f;
 		[[nodiscard]] auto get_tip_position() const -> sf::Vector2f;
 		[[nodiscard]] auto get_size() const -> sf::Vector2f;
 		[[nodiscard]] auto get_rotation() const -> float;

@@ -16,6 +16,9 @@ namespace random_2d_plant_generator
 	public:
 		explicit Plant(sf::Vector2f position);
 
+		[[nodiscard]] auto get_color() const -> sf::Color;
+		[[nodiscard]] auto get_position() const -> sf::Vector2f;
+
 		auto update(float delta_time) -> void;
 		auto draw(sf::RenderWindow& window) const -> void;
 
@@ -34,6 +37,7 @@ namespace random_2d_plant_generator
 
 		Branch::OnCanBranch on_branch_can_branch;
 		std::list<Branch> branches;
+		Branch& trunk;
 
 		[[nodiscard]] auto create_trunk(sf::Vector2f position) const -> Branch;
 		auto do_on_branch_can_branch(Branch const& branch) -> void;
